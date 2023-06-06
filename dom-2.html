@@ -16,8 +16,8 @@
         btnElement.onclick = inputElementOlustur;
 
 
-        let names = "Taner, Ahmet, Ayşe";
-        console.log(names.split(","))
+        //let names = "Taner, Ahmet, Ayşe";
+        //console.log(names.split(","))
 
 
 
@@ -51,9 +51,11 @@
            
         }
 
-        function deleteInputElement(event){
+        function deleteInputElement(event){            
             let btnId = event.target.id;
-            let id = btnId.split("-")[1];
+            //let id = btnId.split("-")[1];
+            let id = btnId.replace("button-","");           
+
             // console.log(btnId.split("-"));
 
             let inputEl = document.getElementById("input-" + id);
