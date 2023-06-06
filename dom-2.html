@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>   
+    <title>DOM-2</title>
+</head>
+<body>
+    <h1>DOM-2</h1>
+    <button id="btn">Input Oluştur</button>
+
+    <hr>
+    <button id="saveBtn" onclick="save()">İnput Elementlerinin Değerlerini Console'a Yaz</button>
+
+    <script>
+        let id = 0;
+        let btnElement = document.getElementById("btn");
+        btnElement.onclick = inputElementOlustur;
+
+
+        let names = "Taner, Ahmet, Ayşe";
+        console.log(names.split(","))
+
+
+
+        function inputElementOlustur(){
+            btnElement.style.color = "red"
+
+
+            let inputElement = document.createElement("input");
+            inputElement.style.width = "60%";
+            inputElement.style.marginTop = "5px";
+            inputElement.placeholder = "Aranacak değer...";
+            inputElement.style.fontSize = "15px";
+            inputElement.style.paddingLeft = "10px";
+            inputElement.style.borderRadius = "20px";
+            inputElement.id = "input-" + id;
+
+            let deleteBtnElement = document.createElement("button");
+            deleteBtnElement.className="delete-btn";
+            deleteBtnElement.innerHTML = "Inputu Sil";
+            deleteBtnElement.id = "button-" + id;
+            deleteBtnElement.onclick = deleteInputElement;
+
+            
+            let hrElement = document.createElement("hr");
+            hrElement.id = "hr-" + id;
+            
+            id++;
+            // document.querySelector("body").appendChild(brElement);
+            // document.querySelector("body").appendChild(inputElement);
+            document.querySelector("body").append(hrElement,inputElement, deleteBtnElement)
+           
+        }
+
+        function deleteInputElement(event){
+            let btnId = event.target.id;
+            let id = btnId.split("-")[1];
+            // console.log(btnId.split("-"));
+
+            let inputEl = document.getElementById("input-" + id);
+            inputEl.remove();
+
+            let btnEl = document.getElementById(btnId);
+            btnEl.remove();
+
+            let hrEl = document.getElementById("hr-" + id);
+            hrEl.remove();
+        }
+    
+        function save(){
+            let inputList = document.querySelectorAll("input");
+
+            let values = [];
+            for(var x of inputList){
+                values.push(x.value);
+                console.log(values);
+            }
+            
+        }
+    </script>
+</body>
+</html>

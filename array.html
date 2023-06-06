@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>    
+    <title>Array</title>
+</head>
+<body>
+    <h1>Array</h1>
+
+    <script>
+        let names = ["Taner","Ahmet","Serap"];
+        let numbers = [1,2,3];
+        let persons = [
+            {
+                name: "Taner",
+                lastName: "Saydam",
+                age: 33
+            },
+            {
+                name: "Ahmet",
+                lastName: "Saydam",
+                age: 28
+            }
+        ]
+
+            names.push("Serap");
+
+            names.splice(1,1);
+
+            let index = names.findIndex(p=> p == "Taner") //lambda
+            names.splice(index,1)
+            console.log(index)
+
+        console.log(names)
+    </script>
+</body>
+</html>

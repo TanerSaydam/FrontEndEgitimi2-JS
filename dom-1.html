@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>    
+    <title>DOM 1</title>
+</head>
+<body>
+    <h1>DOM 1</h1>
+    <input id="search" type="text" placeholder="Aranacak değer...">
+    <!-- <button onclick="setInputValueToConsole()">Input değerini Console'a yaz</button> -->
+    <!-- <button onclick="console.log(document.querySelector('input').value)">Input değerini Console'a yaz</button> -->
+    <button>Input değerini Console'a yaz</button>
+    <hr>
+    <ul>
+        
+    </ul>
+
+    <!-- <script>
+        //let inputElement = document.getElementsByTagName("input")[0]
+
+        let inputElement = document.getElementById("search");
+        let btnElement = document.querySelector("button");
+
+        function setInputValueToConsole(){
+            console.log(inputElement.value);
+        }
+    </script> -->
+
+    <script>
+        let inputElement = document.getElementById("search");
+        let btnElement = document.querySelector("button");
+        let ulElement = document.querySelector("ul");
+        // btnElement.addEventListener("click",()=>{
+        //     console.log(inputElement.value)
+        //     inputElement.value = "";
+        //     inputElement.focus();
+        // })
+
+        btnElement.onclick = setConsole;
+
+        function setConsole(){
+            // ulElement.innerHTML += "<li>" + inputElement.value + "</li>"
+            //console.log(inputElement.value)
+
+            //ELEMENT SİLME
+            //document.getElementById("search").remove();
+            
+            // let liElement = document.createElement("li");
+            // liElement.innerHTML = inputElement.value;
+            // liElement.style.color = "red";
+            // liElement.className = "form-control";
+            // ulElement.appendChild(liElement);
+
+            // inputElement.value = "";
+            // inputElement.focus();
+        }
+    </script>
+</body>
+</html>
