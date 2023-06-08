@@ -1,9 +1,126 @@
 <!DOCTYPE html>
 <html>
 <head>    
-    <title>Document</title>
+    <title>Login Page</title>
+    <style>
+        .invalid{
+            background-color: red;
+            color: white;
+            border: 1px solid red;
+            outline: none;
+        }
+
+        .invalid-feedback{
+            color: red;
+            font-size: 14px;
+            margin-left: 40px;
+            display: none;
+        }
+
+        .invalid-feedback.show{
+            display: block;
+        }
+
+        del{
+            color: red;
+        }
+        
+    </style>
 </head>
 <body>
-    
+    <h1>Login Page</h1>
+    <div>
+        <div>
+            <label for="email">Email</label>
+            <input
+                id="email"
+                type="email" 
+                required
+                email
+                autocomplete="off">
+            <div class="invalid-feedback">
+                Hata!
+            </div>
+        </div>
+        <div>
+            <label for="userName">UserName</label>
+            <input
+                id="userName"
+                type="text" 
+                required
+                minlength="3"
+                autocomplete="off">
+            <div class="invalid-feedback">
+                Hata!
+            </div>
+        </div>
+        <div>
+            <label for="password">Password</label>
+            <input
+                id="password" 
+                type="password"
+                required
+                minlength="3">
+            <div class="invalid-feedback">
+                Hata!
+            </div>
+            <ul>
+                <li><del>Büyük Harf</del></li>
+                <li>Küçük harf</li>
+                <li>Özel karakter</li>
+                <li>Sayı</li>
+            </ul>
+        </div>
+        <div>
+            <button id="btnLogin" disabled>Login</button>
+        </div>
+    </div>
+
+    <!-- Ödeviniz bu login page regex yazın Büyük harf / küçük harf duyarlı en az 1 özel karakter olacak password için -->
+
+    <script>
+        let inputs = document.querySelectorAll("input");
+        let loginBtnElement = document.getElementById("btnLogin");
+
+        for(let x in inputs){
+            inputs[x].onkeyup = checkInputIsValid;
+            //inputs[x].onclick = checkInputIsValid;
+            //inputs[x].onmouseleave = checkInputIsValid;
+        }        
+
+        function checkInputIsValid(e){
+            let isvalid = e.target.validity.valid;
+            let feedbackElement = e.target.nextElementSibling;            
+
+            IsInputsValid();
+
+            if(isvalid == true){
+                e.target.className = "";
+                feedbackElement.style.display = "none";                
+            }else{
+                e.target.className = "invalid"         
+                feedbackElement.style.display = "block"        
+            }
+        }
+
+        function IsInputsValid(){
+            let result = true;
+            for(var x in inputs){
+                try {
+                    let isValid = inputs[x].validity.valid;
+                    if(!isValid) {
+                        result = false;
+                        break;
+                    }
+                } catch (error) {}               
+            }
+
+            if(result){
+                loginBtnElement.removeAttribute("disabled")
+            }else{                
+                loginBtnElement.setAttribute("disabled","")
+            }
+        }
+    </script>
 </body>
 </html>
