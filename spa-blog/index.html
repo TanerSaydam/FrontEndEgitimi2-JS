@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Blog Page</title>
+    <style>
+        nav{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ccc;
+
+        }
+
+        .navbar{
+            display: flex;
+            gap: 10px;
+            list-style: none;
+        }
+
+        .navbar li a{
+            text-decoration: none;
+            color: black;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .navbar li a:hover{
+            background-color: black;
+            color: white;
+        }
+        
+    </style>
+</head>
+<body>
+    <nav>
+        <h1>Logo</h1>
+        <ul class="navbar">
+           <li><a data-route="/">Home</a></li>
+           <li><a data-route="/yetenekler">Abilities</a></li>
+           <li><a data-route="/iletisim">Contact</a></li>
+           <li><a data-route="/todo">Todo</a></li>
+        </ul>
+    </nav>
+
+    <div id="root">       
+    </div>
+   
+    <script>       
+       let root = document.getElementById("root");
+
+       let routeElements = document.querySelectorAll("*[data-route]");
+       for(let x in routeElements){
+        routeElements[x].onclick = router;
+       }
+
+       function router(event){
+        let route = event.target.dataset.route;
+
+        if(route == "/"){
+            setHomePage();
+        }else if(route == "/iletisim"){
+            setIletisimPage();
+        }else if(route == "/yetenekler"){
+            setYeteneklerPage();
+        }else if(route == "/todo"){
+            setTodoPage();
+        }
+       }
+
+    </script>
+    <script src="home.js"></script>
+    <script src="iletisim.js"></script>
+    <script src="yetenekler.js"></script>
+    <script src="todo.js"></script>
+</body>
+</html>
