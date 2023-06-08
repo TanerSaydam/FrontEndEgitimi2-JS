@@ -22,8 +22,7 @@
 
 
         function inputElementOlustur(){
-            btnElement.style.color = "red"
-
+            btnElement.style.color = "red";
 
             let inputElement = document.createElement("input");
             inputElement.style.width = "60%";
@@ -39,7 +38,6 @@
             deleteBtnElement.innerHTML = "Inputu Sil";
             deleteBtnElement.id = "button-" + id;
             deleteBtnElement.onclick = deleteInputElement;
-
             
             let hrElement = document.createElement("hr");
             hrElement.id = "hr-" + id;
@@ -47,8 +45,7 @@
             id++;
             // document.querySelector("body").appendChild(brElement);
             // document.querySelector("body").appendChild(inputElement);
-            document.querySelector("body").append(hrElement,inputElement, deleteBtnElement)
-           
+            document.querySelector("body").append(hrElement,inputElement, deleteBtnElement);           
         }
 
         function deleteInputElement(event){            

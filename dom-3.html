@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>    
+    <title>DOM 3</title>
+    <style>
+        .invalid{
+         border: 3px solid red;
+         outline: none;
+         color: red;
+        }
+
+        #invalid-div{
+            color: red;
+            font-size: 12px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>DOM 3</h1>
+    <div>
+        Kullanıcı Adı
+        <input required minlength="3" 
+        onkeyup="isInputValid(event)">
+        <div id="invalid-div">Hata!</div>
+    </div>
+    <div>
+        <button id="saveBtn" disabled>Kaydet</button>
+    </div>
+
+    <script>
+        function isInputValid(event){
+            const result = event.target.validity.valid;
+            let divElement = document.getElementById("invalid-div")
+            let btnElement = document.getElementById("saveBtn");
+
+            if(result == true){
+                event.target.className = "";
+                divElement.style.display = "none";
+                btnElement.removeAttribute("disabled")
+            }else{
+                event.target.className = "invalid"                
+                divElement.style.display = "block";
+                btnElement.setAttribute("disabled","")
+            }
+        }
+    </script>
+</body>
+</html>
