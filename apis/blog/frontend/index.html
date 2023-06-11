@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>My Blog Page</title>    
+</head>
+<body>
+    <nav>
+        <h1>My Blog</h1>
+        <ul>
+            <li>
+                <a href="index.html">Ana Sayfa</a>
+            </li>
+            <li>
+                <a href="hakkimda.html">Hakkımda</a>
+            </li>
+            <li>
+                <a href="yetenekler.html">Yetenekler</a>
+            </li>
+            <li>
+                <a href="iletisim.html">İletişim</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="loading">
+        <h1>Yükleniyor. Lütfen bekleyiniz...</h1>
+        <div class="spinner"></div>
+    </div>
+
+    <div class="content">
+        <div class="container">
+            <h1 id="name"></h1>
+            <img id="logo" width="300">
+        </div>    
+        
+        <section class="container">
+            <h1>Hakkımızda</h1>
+            <div id="hakkimizda"></div>
+            <p>
+                <a href="hakkimizda.html">Devamı...</a>
+            </p>
+        </section>    
+    
+        <div class="container">
+            <h1>Yazılarımdan haberdar ol</h1>
+            <input type="email" placeholder="Mail adresinizi yazın">
+            <button>
+                <i class="fa-solid fa-thumbs-up"></i>
+                Subscripe
+            </button>
+        </div>    
+    
+        <div class="container">
+            <h1>Bana Sosyal Medya Hesaplarımdan ulaşın</h1>
+            <div id="social-medias"></div>
+        </div>
+    </div>
+
+   
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+    <script src="https://kit.fontawesome.com/dc59d75dac.js" crossorigin="anonymous"></script>
+
+    <script>
+        const api = "http://localhost:5000/api";
+
+        setTimeout(()=> {
+            getPersonelInformation();
+            getSocialMediaAccounts();
+            document.querySelector(".loading").style.
+            display="none";
+            document.querySelector(".content").style.display = "block";
+            document.querySelector("nav").style.display = "flex";
+        },3000);
+
+        function getPersonelInformation(){
+            axios.get(`${api}/personel`)
+                .then(res=> {
+                    document.getElementById("name").innerText = "My name is " + res.data.name;
+
+                    document.getElementById("logo").src = res.data.logo;
+
+                    document.getElementById("hakkimizda").innerHTML += res.data.aboutMe
+                })
+        }
+
+        
+
+        function getSocialMediaAccounts(){
+            axios.get(api + "/socialMedias")
+                .then(res=> {
+                    let divElement = document.getElementById("social-medias");
+
+                    divElement.innerHTML = "";
+
+                    for(let element of res.data){
+                        divElement.innerHTML += `
+                        <a href="${element.link}"
+                        target="_blank"
+                        title="${element.name}">
+                            ${element.icon}
+                        </a>
+                        `
+                    }
+                })
+        }
+    </script>
+</body>
+</html>
