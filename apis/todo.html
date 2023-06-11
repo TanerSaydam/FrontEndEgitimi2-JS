@@ -2,6 +2,42 @@
 <html>
 <head>    
     <title>Todo App</title>
+    <style>
+        table{
+            border: 1px solid black;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table tr th{
+            background-color: #f2f2f2;
+        }
+
+        table tr th, table tr td{
+            border: 1px solid black;
+        }
+
+        table tr:hover{
+            background-color: black;
+            color: white !important;
+        }
+
+        button{
+            font-size: 12px;
+            padding: 5px;
+            margin: 2px;
+        }
+
+        .not-completed{
+            background-color: red;
+            color: white;
+        }
+
+        .completed{
+            background-color: green;
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <h1>Todo App</h1>
@@ -11,16 +47,55 @@
         <button type="submit">Save</button>
     </form>
     <hr>
-    <ul>
-        
-    </ul>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>İş</th>
+                <th>Durumu</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        </tbody>
+    </table>
 
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
     <script>
         //let todos = [];
-        let ulElement = document.querySelector("ul");
+        let tbodyElement = document.querySelector("tbody");
+        let data = [];
 
         function save(e){
+            e.preventDefault();
+
+            let inputElement = document.getElementById("work");
+            let body = {work: inputElement.value};
+
+            // fetch("http://localhost:5000/api/add",{
+            //     method: "POST",
+            //     body: JSON.stringify(body),
+            //     headers: {
+            //         "Content-type": "application/json"
+            //     }
+            // })
+            //     .then(res => res.json())
+            //     .then(data => {
+            //         console.log(data.message);
+            //         getTodoList();
+            //         inputElement.value = "";
+            //     })
+
+            axios.post("http://localhost:5000/api/add",body)
+                .then(res=> {
+                    console.log(res.data.message);
+                     getTodoList();
+                     inputElement.value = "";
+                });
+        }
+
+        function save1(e){
            e.preventDefault(); //sayfayı yenilemesin diye bu yazılmalı
 
            let inputElement = document.querySelector("#work"); //inputu yakaladık
@@ -40,6 +115,92 @@
 
             //    document.querySelector("ul").innerHTML = text;
         }
+    
+        const getTodoList = () =>{
+            axios.get("http://localhost:5000/api/getTodoList")
+                .then(res=> {
+                    data = res.data;
+
+                    tbodyElement.innerHTML = "";
+
+                    for(let x in res.data){
+                        // let trElement = document.createElement("tr");
+
+                        // let tdElement1 = document.createElement("td");
+                        // tdElement1.innerText = +x + 1;
+
+                        // let tdElement2 = document.createElement("td");
+                        // tdElement2.innerText = res.data[x].work;
+
+                        // let tdElement3 = document.createElement("td");
+                        // tdElement3.innerText = res.data[x].isCompleted;
+
+                        // let tdElement4 = document.createElement("td");
+                        // tdElement4.innerHTML = `
+                        // <button>Tamamla</button>
+                        // <button>Sil</button>
+                        // `
+
+                        // trElement.append(tdElement1,tdElement2,tdElement3,tdElement4);
+
+                        // tbodyElement.appendChild(trElement);
+
+
+                        let isCompletedStatus = res.data[x].isCompleted == true ? 'İş Tamamlandı' : 'İş Bekliyor';
+
+                        tbodyElement.innerHTML += `
+                        <tr>
+                            <td>${+x + 1}</td>
+                            <td>${res.data[x].work}</td>
+                            <td class="${res.data[x].isCompleted ? 'completed' : 'not-completed'}">${isCompletedStatus}</td>
+                            <td>
+                                ${res.data[x].isCompleted ? '' : '<button onclick="completeWork(' + x + ')">Tamamla</button>'}
+                                <button onclick="removeWorkByIndex(${x})">Sil</button>
+                            </td>
+                        </tr>
+                        `
+                    }
+                })
+        }
+
+        const completeWork = (i)=>{
+            let body = {index: i};
+            axios.post("http://localhost:5000/api/completeWork", body)
+                .then(res=> {
+                    console.log(res.data.message);
+                    getTodoList();
+                });
+        }
+
+        const removeWorkByIndex = (i)=> {
+            let result = confirm(data[i].work + " iş kaydını silmek istiyor musunuz?")
+
+            if(!result) return;
+
+            let body = {index: i};
+            axios.post("http://localhost:5000/api/removeByIndex",body)
+                .then(res=> {
+                    console.log(res.data.message);
+                    getTodoList();
+                })
+        }
+
+        const getTodoListWithFetch = ()=>{
+            // fetch("http://localhost:5000/api/getTodoList")
+            //     .then(res=> res.json())
+            //     .then(data => {
+            //         ulElement.innerHTML = "";
+                    
+            //         for(let element of data){
+            //             let liElement = document.createElement("li");
+            //             liElement.innerText = element;
+
+            //             ulElement.appendChild(liElement);
+            //         }
+            //     });
+        }
+
+        getTodoList();
     </script>
 </body>
 </html>
