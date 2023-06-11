@@ -49,6 +49,8 @@ let socialMedias = [
     },
 ]
 
+let subscibes = [];
+
 app.get("/api/personel", (req,res)=> {
     res.json(personel);
 });
