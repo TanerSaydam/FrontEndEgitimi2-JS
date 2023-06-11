@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>   
+    <title>Asenkron Programlama</title>
+</head>
+<body>
+    <h1>Asenkron Programlama</h1>
+    <h2></h2>
+
+    <script>
+        console.log("Pazartesi");
+        // new Promise((res)=> {
+        //     setTimeout(()=> {
+        //     console.log("Salı");
+        //     res();
+        // },2000);        
+        // }).then(res=> {
+        //     console.log("Çarşamba");
+        // });
+
+        setTimeout(function(){
+            //yapılacak işlem
+            console.log("Salı")
+        },1000);
+
+        setInterval(function(){
+           document.querySelector("h2").innerText= new Date()
+        },4000);
+
+        console.log("Merhaba")
+    </script>
+</body>
+</html>

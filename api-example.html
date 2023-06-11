@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>    
+    <title>Api</title>
+</head>
+<body>
+    <h1>WebApi | Restful Api</h1>
+    <p>Api istekleri 2 tip ile yapılır GET | POST</p>
+    <ul>
+
+    </ul>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+    <script>
+        let text = "";
+
+        axios.get("http://localhost:5000/api/getall")
+        .then(function(res){
+            console.log(res.data)
+        });
+
+        // fetch("https://jsonplaceholder.typicode.com/todos")
+        // .then(res=> res.json()) //fetch kullanılıyorsa
+        // .then(data => {
+            
+        //     for(let x in data){
+        //         text += "<li>" + data[x].title + "</li>"
+        //     }
+
+        //     document.querySelector("ul").innerHTML = text;
+        // });
+    </script>
+</body>
+</html>

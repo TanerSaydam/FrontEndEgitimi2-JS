@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>    
+    <title>Todo App</title>
+</head>
+<body>
+    <h1>Todo App</h1>
+    <form onsubmit="save(event)">
+        <label for="work">Work</label>
+        <input type="text" id="work">
+        <button type="submit">Save</button>
+    </form>
+    <hr>
+    <ul>
+        
+    </ul>
+
+
+    <script>
+        //let todos = [];
+        let ulElement = document.querySelector("ul");
+
+        function save(e){
+           e.preventDefault(); //sayfayı yenilemesin diye bu yazılmalı
+
+           let inputElement = document.querySelector("#work"); //inputu yakaladık
+           
+           let liElement = document.createElement("li"); //Li elementi oluşturuyoruz
+           liElement.innerText = inputElement.value; //li elementine değer olarak input değerini veriyoruz
+           ulElement.appendChild(liElement); //ul elementine li elementini ekliyoruz
+
+           //todos.push(inputElement.value); //input değerini listeye ekledik
+           inputElement.value = ""; //input içini temizledik
+
+           
+
+
+
+
+        //    let text = "";
+
+        //    todos.forEach(element=> {
+        //     text+= "<li>" + element + "</li>";
+        //    });
+
+        //    document.querySelector("ul").innerHTML = text;
+        }
+    </script>
+</body>
+</html>
