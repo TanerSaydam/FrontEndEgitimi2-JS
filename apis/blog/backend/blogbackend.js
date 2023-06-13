@@ -1,26 +1,23 @@
 const express = require("express");
 const cors = require("cors");
+const connection = require("./server");
 const app = express();
 app.use(cors());
 app.use(express.json());
+const mongoose = require("mongoose");
+const Personel = require("./models/personel");
+const checkPersonelRecord = require("./services/personel");
 
-let personel = {
-    name: "Taner Saydam",
-    logo: "logo.png",
-    aboutMe: `
-    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maiores pariatur molestiae sapiente, quasi non id culpa quam sunt eos aliquam deleniti accusamus voluptate cupiditate minus quia? Eos velit error quae?
-        Temporibus labore amet reiciendis omnis laboriosam corrupti sit unde aperiam ullam fugit ex consequuntur quos, totam eligendi tenetur recusandae molestiae minus nesciunt illo quis? Suscipit doloremque labore id ipsum reiciendis!
-        </p>
-        <br>
-        <p>
-        Dolor quidem consectetur est quo, quam, aut molestiae rem omnis vitae perspiciatis, id assumenda itaque doloremque ipsum. Porro ab, voluptate, sunt nemo repellat quis mollitia repellendus alias modi architecto odio?
-        Asperiores repudiandae cum quo voluptas!
-        </p>
-        <br>
-        <p>Aliquam velit dolores sapiente iure voluptas inventore obcaecati, culpa reprehenderit id! Ad ipsa labore est nemo cumque perspiciatis quod. Blanditiis laborum totam provident quis tempora.
-        Nobis ex nam at. Perferendis nisi voluptate eos, repudiandae animi reiciendis perspiciatis aliquid, non quas impedit repellendus iste expedita quasi laboriosam aliquam delectus hic! Ad quas incidunt quos sequi quo?</p>
-        `
-}
+connection();
+checkPersonelRecord();
+
+const socialMediaSchema = new mongoose.Schema({
+    name: String,
+    icon: String,
+    link: String
+});
+
+const SocialMedia = mongoose.model("SocialMedia", socialMediaSchema);
 
 let socialMedias = [
     {
@@ -50,7 +47,30 @@ let socialMedias = [
     },
 ]
 
-let subscibes = [];
+async function checkSocialMediaRecords(){
+    let result = await SocialMedia.find();
+
+    if(result.length == 0){
+        for(let sc of socialMedias){
+            let socialMedia = new SocialMedia();
+            socialMedia.name = sc.name;
+            socialMedia.icon = sc.icon;
+            socialMedia.link = sc.link;
+
+            await socialMedia.save();
+        }
+    }
+}
+
+checkSocialMediaRecords();
+
+
+let subscibeSchema = new mongoose.Schema({
+    email: String
+});
+
+let SubScribe = mongoose.model("Subscribe", subscibeSchema);
+
 
 let abilities = [
     {
@@ -71,31 +91,73 @@ let abilities = [
     }
 ]
 
-app.get("/api/personel", (req,res)=> {
-    res.json(personel);
+let abilitySchema = new mongoose.Schema({
+    image: String,
+    title: String
 });
 
-app.get("/api/socialMedias", (req,res)=> {
-    res.json(socialMedias);
+let Ability = mongoose.model("Ability", abilitySchema);
+
+function checkAbilityRecords(){
+    Ability.find().then(res=> {
+        if(res.length == 0){
+            for(let ab of abilities){
+                let ability = new Ability();
+                ability.image =ab.image;
+                ability.title = ab.title;
+                ability.save();
+            }
+        }
+    })
+}
+
+checkAbilityRecords();
+
+let contactSchema = new mongoose.Schema({
+    email: String,
+    subject: String,
+    content: String,
+    date: Date
 });
 
-app.post("/api/addEmailForSubscribe", (req, res)=> {
+let Contact = mongoose.model("Contact",contactSchema);
+
+
+app.get("/api/personel", async (req,res)=> {
+    let results = await Personel.find();
+    res.json(results[0]);
+});
+
+app.get("/api/socialMedias", async (req,res)=> {
+    let results = await SocialMedia.find();
+    res.json(results);
+});
+
+app.post("/api/addEmailForSubscribe", async (req, res)=> {
     const {email} = req.body;
-    let result = subscibes.filter(p=> p === email);    
+    let result = await SubScribe.find({email: email})
     if(result.length == 0){
-        subscibes.push(email);
+        let sb = new SubScribe();
+        sb.email = email;
+        sb.save();
     }
 
-    res.json(subscibes);
+    res.json({message: "Email başarıyla listeye eklendi!"});
 });
 
-app.get("/api/getAbilities", (req, res)=> {
-    res.json(abilities);
+app.get("/api/getAbilities", async (req, res)=> {
+    let results = await Ability.find();
+    res.json(results);
 });
 
-app.post("/api/send", (req, res)=> {
-    console.log(req.body);
+app.post("/api/send", async (req, res)=> {
+    const contact = new Contact(req.body);
+    let date = new Date();
+    date.setHours(date.getHours() + 3);
+    contact.date = date;
+    await contact.save();
     res.json({message: "Mailiniz başarıyla gönderildi!"});
-})
+});
+
 
 app.listen(5000, ()=> console.log("Backend http://localhost:5000 üzerinde çalışıyor..."));
