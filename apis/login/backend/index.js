@@ -135,10 +135,15 @@ const options = {
     expiresIn: "1h"
 }
 
+async function roleCheck(userId,role){
+    //rolleri elde eder
+    //elde ettiği rolleri rol ile kontrole der
+    //true / false döner
+}
 
 app.get("/", (req,res)=>{
     res.json({message:"Api başarıyla çalışıyor!"});
-})
+});
 
 app.post("/login", async (req,res)=>{
     const {email, password} = req.body;
@@ -153,11 +158,7 @@ app.post("/login", async (req,res)=>{
         let token = jwt.sign(payload,secretKey,options);
         res.json({accessToken: token});
     }
-
-    
-
-    
-})
+});
 
 app.listen(5000,()=> {
     console.log("Uygulama http://localhost:5000 portunda ayakta");
