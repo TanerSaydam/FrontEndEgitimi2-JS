@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Example</title>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>            
+        </ul>
+    </nav>
+    <h1>Login Page</h1>
+    <div>
+        Email
+        <input id="email" type="text">
+    </div>
+    <div>
+        Password
+        <input id="password" type="text">
+    </div>
+    <div>
+        <button onclick="login()">Giriş Yap</button>
+    </div>
+
+    <script>
+        function login(){
+            let emailElement = document.getElementById("email");
+            let passwordElement = document.getElementById("password");
+
+            let data = {
+                email: emailElement.value,
+                password: passwordElement.value
+            };
+
+            fetch("http://localhost:5000/login",{
+                method: "POST",
+                body: JSON.stringify(data),
+                headers: {
+                    "Content-type": "application/json"
+                }
+            })
+            .then(res=> res.json())
+            .then(data=> {
+                console.log(data);
+                localStorage.setItem("token", JSON.stringify(data.accessToken));
+                window.location.href = "index.html"
+            });
+
+        }
+    </script>
+</body>
+</html>

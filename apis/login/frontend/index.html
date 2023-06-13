@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Example</title>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li id="user">Sayın: </li>
+            <li><button onclick="cikisYap()">Çıkış Yap</button></li>
+        </ul>
+    </nav>
+    <h1>Home Page</h1>
+
+    <script>
+        let token = localStorage.getItem("token");        
+
+        if(token == null){
+            window.location.href="login.html"
+        }
+
+        document.getElementById("user").innerText = "Sayın: Taner Saydam"
+
+        function cikisYap(){
+            localStorage.clear();
+            window.location.href="login.html"
+        }
+    </script>
+</body>
+</html>
