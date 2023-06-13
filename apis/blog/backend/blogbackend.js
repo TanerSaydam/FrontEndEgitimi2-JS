@@ -21,6 +21,7 @@ let personel = {
         Nobis ex nam at. Perferendis nisi voluptate eos, repudiandae animi reiciendis perspiciatis aliquid, non quas impedit repellendus iste expedita quasi laboriosam aliquam delectus hic! Ad quas incidunt quos sequi quo?</p>
         `
 }
+
 let socialMedias = [
     {
         name: "Facebook",
@@ -51,6 +52,25 @@ let socialMedias = [
 
 let subscibes = [];
 
+let abilities = [
+    {
+        image: "https://play-lh.googleusercontent.com/RslBy1o2NEBYUdRjQtUqLbN-ZM2hpks1mHPMiHMrpAuLqxeBPcFSAjo65nQHbTA53YYn",
+        title: "HTML"
+    },
+    {
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Unofficial_JavaScript_logo_2.svg/1200px-Unofficial_JavaScript_logo_2.svg.png",
+        title: "JavaScript"
+    },
+    {
+        image: "https://play-lh.googleusercontent.com/ajbmMCoaThQcD4_z-1-6H79M0ItJ1Vz2jW_5yRB_eb1d_Fdzmdci0SPHFfujQj23n-Q",
+        title: "CSS"
+    },
+    {
+        image: "https://www.interviewbit.com/blog/wp-content/uploads/2021/10/jquery-logo-vertical_large_square.png",
+        title: "JQuery"
+    }
+]
+
 app.get("/api/personel", (req,res)=> {
     res.json(personel);
 });
@@ -59,5 +79,23 @@ app.get("/api/socialMedias", (req,res)=> {
     res.json(socialMedias);
 });
 
+app.post("/api/addEmailForSubscribe", (req, res)=> {
+    const {email} = req.body;
+    let result = subscibes.filter(p=> p === email);    
+    if(result.length == 0){
+        subscibes.push(email);
+    }
+
+    res.json(subscibes);
+});
+
+app.get("/api/getAbilities", (req, res)=> {
+    res.json(abilities);
+});
+
+app.post("/api/send", (req, res)=> {
+    console.log(req.body);
+    res.json({message: "Mailiniz başarıyla gönderildi!"});
+})
 
 app.listen(5000, ()=> console.log("Backend http://localhost:5000 üzerinde çalışıyor..."));

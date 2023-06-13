@@ -15,7 +15,7 @@
                 <a href="index.html">Ana Sayfa</a>
             </li>
             <li>
-                <a href="hakkimda.html">Hakkımda</a>
+                <a href="about.html">Hakkımda</a>
             </li>
             <li>
                 <a href="yetenekler.html">Yetenekler</a>
@@ -32,25 +32,25 @@
     </div>
 
     <div class="content">
-        <div class="container">
+        <div class="container line">
             <h1 id="name"></h1>
             <img id="logo" width="300">
         </div>    
         
-        <section class="container">
+        <section class="container line">
             <h1>Hakkımızda</h1>
             <div id="hakkimizda"></div>
             <p>
-                <a href="hakkimizda.html">Devamı...</a>
+                <a href="about.html">Devamı...</a>
             </p>
         </section>    
     
-        <div class="container">
+        <div class="container line">
             <h1>Yazılarımdan haberdar ol</h1>
-            <input type="email" placeholder="Mail adresinizi yazın">
-            <button>
+            <input id="subscibe" type="email" placeholder="Mail adresinizi yazın">
+            <button onclick="addEmailForSubscribe()">
                 <i class="fa-solid fa-thumbs-up"></i>
-                Subscripe
+                Subscribe
             </button>
         </div>    
     
@@ -68,14 +68,11 @@
     <script>
         const api = "http://localhost:5000/api";
 
-        setTimeout(()=> {
-           getPersonelInformation();
-           getSocialMediaAccounts();           
-            document.querySelector(".loading").style.
-            display="none";
-            document.querySelector(".content").style.display = "block";
-            document.querySelector("nav").style.display = "flex";
-        },3000);
+        getPersonelInformation();
+        getSocialMediaAccounts();           
+        document.querySelector(".loading").style.display="none";
+        document.querySelector(".content").style.display = "block";
+        document.querySelector("nav").style.display = "flex";
 
         function getPersonelInformation(){
             axios.get(`${api}/personel`)
@@ -105,6 +102,17 @@
                         `
                     }
                 })
+        }
+    
+        function addEmailForSubscribe(){
+            let element = document.getElementById("subscibe");
+
+            axios.post(api + "/addEmailForSubscribe", {email: element.value})
+            .then(res=> {
+                element.value = "";
+                alert("Email adresin sisteme eklendi!");
+                console.log(res.data);
+            });
         }
     </script>
 </body>

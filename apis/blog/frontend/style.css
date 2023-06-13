@@ -52,13 +52,21 @@ nav ul li a:hover{
     transition: all .5s ease;
 }
 
+.line{
+    border-bottom: 1px solid white;
+}
+
 .container{
     margin-top: 20px;
     text-align: center; 
     margin-bottom: 20px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid white;    
+    padding-bottom: 20px;        
 }
+
+.yetenek-div{
+    padding-left: 20px;
+}
+
 
 .container h1{
     margin-bottom: 10px;
@@ -92,6 +100,46 @@ button{
 #hakkimizda{
     height: 90px;
     overflow: hidden;   
+}
+
+#yetenekler{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.yetenek{    
+    border: 2px solid;
+    width: 22%;
+    float: left;
+    padding: 10px;
+    margin: auto;    
+    margin-bottom: 10px;
+}
+
+.yetenek-image{
+    width: 200px;
+    max-width: 100%;
+}
+
+.iletisim-div{   
+    width: 50%;
+    margin: auto;
+}
+
+input, textarea{
+    width: 100%;
+    font-size: 18px;
+    padding-left: 5px;
+    border-radius: 5px;
+    background-color: #ccc;
+}
+button{
+    width: 100%;
+    font-size: 18px;
+    border-radius: 5px;
+        
 }
 
 .spinner {

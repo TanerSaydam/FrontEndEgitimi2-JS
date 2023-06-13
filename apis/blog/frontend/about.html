@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>My Blog Page</title>    
+</head>
+<body>
+    <nav>
+        <h1>My Blog</h1>
+        <ul>
+            <li>
+                <a href="index.html">Ana Sayfa</a>
+            </li>
+            <li>
+                <a href="about.html">Hakkımda</a>
+            </li>
+            <li>
+                <a href="yetenekler.html">Yetenekler</a>
+            </li>
+            <li>
+                <a href="iletisim.html">İletişim</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="loading">
+        <h1>Yükleniyor. Lütfen bekleyiniz...</h1>
+        <div class="spinner"></div>
+    </div>
+
+    <div class="content">        
+        <section class="container">
+            <h1>Hakkımızda</h1>
+            <div id="hakkimda"></div>
+        </section>
+    </div>
+
+   
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+    <script src="https://kit.fontawesome.com/dc59d75dac.js" crossorigin="anonymous"></script>  
+    
+    <script>
+         const api = "http://localhost:5000/api";
+
+         document.querySelector(".loading").style.display="none";
+        document.querySelector(".content").style.display = "block";
+        document.querySelector("nav").style.display = "flex";
+
+
+        getAboutMe();
+
+        function getAboutMe(){
+            axios.get(api + "/personel")
+                .then(res=> {
+                    document.getElementById("hakkimda")
+                    .innerHTML = res.data.aboutMe;
+                })
+        }
+    </script>
+</body>
+</html>
