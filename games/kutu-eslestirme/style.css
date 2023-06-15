@@ -1,0 +1,24 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+h1 {
+    color: white;
+    text-align: center;
+    display: none;
+}
+
+.kutu {
+    transition: all 1s ease;
+    border: 1px solid white;
+    background-color: red;
+    width: 20%;
+    height: 100px;
+}
+
+.kutu.on{
+    background-color: green;
+}
