@@ -42,6 +42,7 @@ for(let a in meyveList){
     }    
 }
 
+kutular.sort((a, b) => a.id - b.id);
 console.log(kutular);
 
 let text = "";
