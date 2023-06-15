@@ -12,6 +12,8 @@ let yilanParcalari = [];
 let yilanUzunlugu = 3;
 let elmaX = 5;
 let elmaY = 5;
+let hiz = 10;
+let skor = 0;
 
 class YilanParcasi{
     constructor(x,y){
@@ -25,6 +27,16 @@ function oyunuCiz(){
     yilaniCiz();
     yilaninKonumunuGuncelle();
     elmayiCiz();
+    elmaninKonumunuGuncelle();
+    skoruCiz();
+    hiziCiz();    
+
+    let sonuc = oyunBittiMi();    
+    if(sonuc){
+        return;
+    }
+
+    setTimeout(oyunuCiz, 1000/hiz);
 }
 
 function yeniOyun(){
@@ -55,16 +67,20 @@ function yilaniCiz(){
 }
 
 function tusHareketleri(e){
-    if(e.keyCode == 37){
+    if(e.keyCode == 37){ //sol
+        if(hareketX == 1) return;
        hareketX = -1;
        hareketY = 0;
-    }else if(e.keyCode == 38){
+    }else if(e.keyCode == 38){ //üst
+        if(hareketY == 1) return;
         hareketY = -1;
         hareketX = 0;
-    }else if(e.keyCode == 39){
+    }else if(e.keyCode == 39){ //sağ
+        if(hareketX == -1) return;
         hareketY = 0;
         hareketX = 1;
-    }else if(e.keyCode == 40){
+    }else if(e.keyCode == 40){ //aşağı
+        if(hareketY == -1) return;
         hareketY =1;
         hareketX = 0;
     }    
@@ -79,7 +95,7 @@ function yilaninKonumunuGuncelle(){
         x = 19
     }else{
         x = sonucX;
-    }
+    }    
 
     if(sonucY > 19){
         y = 0;
@@ -95,6 +111,69 @@ function elmayiCiz(){
     ctx.fillRect(elmaX * konum,elmaY * konum,18,18);
 }
 
-setInterval(()=>{
-    oyunuCiz();    
-},100);
+function elmaninKonumunuGuncelle(){
+    if(x === elmaX && y === elmaY){
+        elmaX = Math.floor(Math.random() * konum);
+        elmaY = Math.floor(Math.random() * konum);
+
+        let elmaKonumuMusaitMi = false;
+        while(!elmaKonumuMusaitMi){
+            elmaKonumuMusaitMi = true;
+            for(let el of yilanParcalari){
+                if(el.x === elmaX && el.y === elmaY){
+                    elmaX = Math.floor(Math.random() * konum);
+                    elmaY = Math.floor(Math.random() * konum);
+                    elmaKonumuMusaitMi= false;
+                }
+            }
+        }
+
+        yilanUzunlugu +=1;
+        skor += 10;
+        if(yilanUzunlugu %3 === 0){
+            hiz++;
+        }
+    }
+}
+
+function skoruCiz(){
+    ctx.fillStyle = "white";
+    ctx.font = "20px verdena";
+    ctx.fillText(`Skor: ${skor}`,320,30)
+}
+
+function hiziCiz(){
+    ctx.fillStyle = "white";
+    ctx.font = "20px verdena";
+    ctx.fillText(`Hız: ${hiz}`,320,60)
+}
+
+function oyunBittiMi(){
+    let oyunBitti = false;    
+    if(hareketX === 0 && hareketY === 0){
+        return;
+    }
+
+    for(let i in yilanParcalari){
+        let part = yilanParcalari[i];
+        //console.log(part.x, x," - ", part.y, y);
+        if(part.x == x && part.y == y){
+            oyunBitti = true;
+            break;
+        }
+    }
+
+    if(oyunBitti){
+        oyunBittiyiCiz();
+    }
+
+    return oyunBitti;
+}
+
+function oyunBittiyiCiz(){
+    ctx.fillStyle = "white";
+    ctx.font = "50px verdena";
+    ctx.fillText("Oyun Bitti",400/4.5, 400/2)
+}
+
+oyunuCiz();
