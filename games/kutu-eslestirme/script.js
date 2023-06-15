@@ -76,7 +76,7 @@ function rotateDiv(i) {
         let meyveVarMi = false;
 
         for (let m of kutular) {
-            if (m.acikMi == true && m.meyveAdi == kutular[i].meyveAdi && m.id != i) {
+            if (m.acikMi == true && m.meyveAdi == kutular.filter(p=> p.id == i)[0].meyveAdi && m.id != i) {
                 meyveVarMi = true;
                 document.getElementById("div-" + m.id).classList.add("on");
                 break;
@@ -96,7 +96,7 @@ function rotateDiv(i) {
         }
 
     }else{
-        kutular[i].acikMi = true;
+        kutular.filter(p=> p.id == i)[0].acikMi = true;
 
         let acikKutuSayisi = kutular.filter(p=> p.acikMi == true).length;
 
