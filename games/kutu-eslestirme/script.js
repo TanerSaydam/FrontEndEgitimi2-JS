@@ -92,7 +92,7 @@ function rotateDiv(i) {
 
                 document.querySelector(`#div-${i} h1`).style.display = "none";
                 document.querySelector(`#div-${i} h1`).style.transform = "rotateY(-180deg)";
-            }, 2000);
+            }, 1000);
         }
 
     }else{
