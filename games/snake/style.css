@@ -1,0 +1,26 @@
+body{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+button{
+    width: 45%;
+    padding: 10px;
+    background-color: green;
+    color: white;
+    box-shadow: 5px 5px 5px black;
+    cursor: pointer;    
+    margin-bottom: 20px;
+}
+
+button:hover{
+    background-color: rgb(5,122,87);
+}
+
+canvas{
+    box-shadow: 20px 10px 50px black;
+}
